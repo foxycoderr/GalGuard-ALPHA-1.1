@@ -1,0 +1,231 @@
+# Hosting 
+
+from flask import Flask
+app = Flask('app')
+
+@app.route('/')
+def server_host():
+  return 'Bot online...'
+
+app.run(host='0.0.0.0', port=8080)
+
+
+# Translations
+print()Translator().translate("Hello World!!", "en", "ja")
+
+# Prefixes
+def get_prefix(client, message):
+  with open('prefixes.json', 'r') as f:
+    prefixes = json.load(f)
+
+  return prefixes[str(message.guild.id)]
+
+client = commands.Bot(command_prefix = get_prefix)
+
+
+@client.event
+async def on_guild_join(guild):
+  with open('prefixes.json', 'r') as f:
+    prefixes = json.load(f)
+
+    prefixes[str(guild.id)] = '?'
+
+  with open('prefixes.json', 'w') as f:
+    json.dump(prefixes, f, indent=4)
+
+@client.event
+async def on_guild_remove(guild): 
+    with open('prefixes.json', 'r') as f:
+      prefixes = json.load(f)
+
+      prefixes.pop(str(guild.id))
+
+    with open('prefixes.json', 'w') as f:
+      json.dump(prefixes, f, indent=4)
+
+
+@client.command()
+async def set_prefix(ctx, prefix):
+  with open('prefixes.json', 'r') as f:
+    prefixes = json.load(f)
+
+    prefixes[str(ctx.guild.id)] = prefix
+
+  with open('prefixes.json', 'w') as f:
+    json.dump(prefixes, f, indent=4)
+
+
+
+
+
+#translator langs
+    'af': 'afrikaans',
+    'sq': 'albanian',
+    'am': 'amharic',
+    'ar': 'arabic',
+    'hy': 'armenian',
+    'az': 'azerbaijani',
+    'eu': 'basque',
+    'be': 'belarusian',
+    'bn': 'bengali',
+    'bs': 'bosnian',
+    'bg': 'bulgarian',
+    'ca': 'catalan',
+    'ceb': 'cebuano',
+    'ny': 'chichewa',
+    'zh-cn': 'chinese (simplified)',
+    'zh-tw': 'chinese (traditional)',
+    'co': 'corsican',
+    'hr': 'croatian',
+    'cs': 'czech',
+    'da': 'danish',
+    'nl': 'dutch',
+    'en': 'english',
+    'eo': 'esperanto',
+    'et': 'estonian',
+    'tl': 'filipino',
+    'fi': 'finnish',
+    'fr': 'french',
+    'fy': 'frisian',
+    'gl': 'galician',
+    'ka': 'georgian',
+    'de': 'german',
+    'el': 'greek',
+    'gu': 'gujarati',
+    'ht': 'haitian creole',
+    'ha': 'hausa',
+    'haw': 'hawaiian',
+    'iw': 'hebrew',
+    'he': 'hebrew',
+    'hi': 'hindi',
+    'hmn': 'hmong',
+    'hu': 'hungarian',
+    'is': 'icelandic',
+    'ig': 'igbo',
+    'id': 'indonesian',
+    'ga': 'irish',
+    'it': 'italian',
+    'ja': 'japanese',
+    'jw': 'javanese',
+    'kn': 'kannada',
+    'kk': 'kazakh',
+    'km': 'khmer',
+    'ko': 'korean',
+    'ku': 'kurdish (kurmanji)',
+    'ky': 'kyrgyz',
+    'lo': 'lao',
+    'la': 'latin',
+    'lv': 'latvian',
+    'lt': 'lithuanian',
+    'lb': 'luxembourgish',
+    'mk': 'macedonian',
+    'mg': 'malagasy',
+    'ms': 'malay',
+    'ml': 'malayalam',
+    'mt': 'maltese',
+    'mi': 'maori',
+    'mr': 'marathi',
+    'mn': 'mongolian',
+    'my': 'myanmar (burmese)',
+    'ne': 'nepali',
+    'no': 'norwegian',
+    'or': 'odia',
+    'ps': 'pashto',
+    'fa': 'persian',
+    'pl': 'polish',
+    'pt': 'portuguese',
+    'pa': 'punjabi',
+    'ro': 'romanian',
+    'ru': 'russian',
+    'sm': 'samoan',
+    'gd': 'scots gaelic',
+    'sr': 'serbian',
+    'st': 'sesotho',
+    'sn': 'shona',
+    'sd': 'sindhi',
+    'si': 'sinhala',
+    'sk': 'slovak',
+    'sl': 'slovenian',
+    'so': 'somali',
+    'es': 'spanish',
+    'su': 'sundanese',
+    'sw': 'swahili',
+    'sv': 'swedish',
+    'tg': 'tajik',
+    'ta': 'tamil',
+    'te': 'telugu',
+    'th': 'thai',
+    'tr': 'turkish',
+    'uk': 'ukrainian',
+    'ur': 'urdu',
+    'ug': 'uyghur',
+    'uz': 'uzbek',
+    'vi': 'vietnamese',
+    'cy': 'welsh',
+    'xh': 'xhosa',
+    'yi': 'yiddish',
+    'yo': 'yoruba',
+    'zu': 'zulu',
+
+
+
+
+
+
+@client.command()
+async def memes(ctx):
+    my_secret1 = os.environ['passer']
+    reddit = praw.Reddit(client_id = "elpyXbtX30RC-UZu1GMnig", client_secret = "f4mFRXWcY10jUhIrjOkFXdV4xNPAvA", username = "foxycoder4580", password = my_secret1, user_agent = "otlolit")
+
+    subreddit = reddit.subreddit("SpongebobMemes")
+    all_subs = []
+    top = subreddit.top(limit = 30)
+    for submission in top:
+        all_subs.append(submission)
+
+    random_sub = random.choice(all_subs)
+
+    name = random_sub.title
+    url = random_sub.url
+
+    help = discord.Embed(title=name, color=0xFF0020, timestamp = ctx.message.created_at)
+    help.set_image(url = url)
+    help.set_thumbnail(url = "https://i.ibb.co/SJjG2Mn/New-Project-15.png")
+
+    await ctx.message.channel.send(embed=help)
+
+
+
+
+
+
+
+
+# [-------UPTIME LOGS-------]
+"""while True:
+  now = datetime.now()
+  today = date.today()
+  current_date = today.strftime("%d/%m/%Y")
+  current_time = now.strftime("%H:%M:%S")
+  with open('logs.json', 'r') as f:
+    prefixes = json.load(f)
+    prefixes[str(current_date + "-" + current_time)] = 'up'
+  with open('logs.json', 'w') as f:
+    json.dump(prefixes, f, indent=4)
+  time.sleep(60)
+"""
+
+
+
+
+
+
+# tempban
+@commands.command(aliases=["tmb", "temp", "tmp"])
+  @commands.has_permissions(ban_members=True)
+  async def temp_ban(self, ctx, member:discord.Member, duration:int, *, reason="no reason"):
+    await ctx.guild.ban(member)
+    await ctx.send(f"**{member}** has been temp banned for {duration} seconds, reason: {reason}")
+    await ctx.message.delete(delay=10)
+    await asyncio.sleep(duration)
+    await ctx.guild.unban(member)
