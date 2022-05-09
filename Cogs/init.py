@@ -12,6 +12,6 @@ class Init(commands.Cog):
     client = self.client
     while True: 
       await self.client.change_presence(activity=discord.Game(name="?help"))
-      """await asyncio.sleep(5)
+      await asyncio.sleep(5)
       await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f" {str(len(client.guilds))} servers | {sum([guild.member_count for guild in client.guilds])} users")) 
-      await asyncio.sleep(5)"""
+      await asyncio.sleep(5)
